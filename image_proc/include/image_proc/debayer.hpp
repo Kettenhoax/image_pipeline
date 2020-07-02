@@ -55,8 +55,6 @@ public:
 
 private:
   image_transport::Subscriber sub_raw_;
-
-  std::string camera_namespace_;
   int debayer_;
 
   int debayer_bilinear_ = 0;
@@ -69,7 +67,6 @@ private:
   image_transport::Publisher pub_mono_;
   image_transport::Publisher pub_color_;
 
-  void connectCb();
   void imageCb(const sensor_msgs::msg::Image::ConstSharedPtr & raw_msg);
 };
 

@@ -57,9 +57,6 @@ private:
 
   int queue_size_;
   int interpolation;
-  std::string camera_namespace_;
-  std::string image_rect;
-  std::string image_topic;
 
   std::mutex connect_mutex_;
   image_transport::Publisher pub_rect_;
@@ -67,7 +64,6 @@ private:
   // Processing state (note: only safe because we're using single-threaded NodeHandle!)
   image_geometry::PinholeCameraModel model_;
 
-  void connectCb();
   void imageCb(
     const sensor_msgs::msg::Image::ConstSharedPtr & image_msg,
     const sensor_msgs::msg::CameraInfo::ConstSharedPtr & info_msg);
