@@ -60,10 +60,6 @@ void RectifyNode::imageCb(
   const sensor_msgs::msg::Image::ConstSharedPtr & image_msg,
   const sensor_msgs::msg::CameraInfo::ConstSharedPtr & info_msg)
 {
-  if (pub_rect_.getNumSubscribers() < 1) {
-    return;
-  }
-
   // Verify camera is actually calibrated
   if (info_msg->k[0] == 0.0) {
     RCLCPP_ERROR(

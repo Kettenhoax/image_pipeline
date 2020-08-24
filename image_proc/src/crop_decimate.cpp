@@ -118,10 +118,10 @@ CropDecimateNode::CropDecimateNode(const rclcpp::NodeOptions & options)
   int interpolation = this->declare_parameter("interpolation", 0);
   interpolation_ = static_cast<CropDecimateModes>(interpolation);
 
-  pub_ = image_transport::create_camera_publisher(this, "image_raw");
+  pub_ = image_transport::create_camera_publisher(this, "crop_decimate/image", rmw_qos_profile_sensor_data);
   sub_ = image_transport::create_camera_subscription(
     this, "image_raw", std::bind(&CropDecimateNode::imageCb, this,
-    std::placeholders::_1, std::placeholders::_2), "raw");
+    std::placeholders::_1, std::placeholders::_2), "raw", rmw_qos_profile_sensor_data);
 }
 
 void CropDecimateNode::imageCb(
@@ -130,9 +130,10 @@ void CropDecimateNode::imageCb(
 {
   /// @todo Check image dimensions match info_msg
 
-  if (pub_.getNumSubscribers() < 1) {
-    return;
-  }
+  // hardcoded to 0 in ROS eloquent
+  // if (pub_.getNumSubscribers() < 1) {
+  //   return;
+  // }
 
   int decimation_x = decimation_x_;
   int decimation_y = decimation_y_;
