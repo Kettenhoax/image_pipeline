@@ -49,7 +49,7 @@ RectifyNode::RectifyNode(const rclcpp::NodeOptions & options)
 {
   queue_size_ = this->declare_parameter("queue_size", 5);
   interpolation = this->declare_parameter("interpolation", 1);
-  pub_rect_ = image_transport::create_publisher(this, "image_rect");
+  pub_rect_ = image_transport::create_publisher(this, "image_rect", rmw_qos_profile_sensor_data);
   subscribeToCamera();
 }
 
@@ -69,7 +69,7 @@ void RectifyNode::subscribeToCamera()
   sub_camera_ = image_transport::create_camera_subscription(
     this, "image", std::bind(
       &RectifyNode::imageCb,
-      this, std::placeholders::_1, std::placeholders::_2), "raw");
+      this, std::placeholders::_1, std::placeholders::_2), "raw", rmw_qos_profile_sensor_data);
   // }
 }
 
