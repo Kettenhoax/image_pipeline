@@ -56,6 +56,16 @@ target_compile_definitions(resize
 rclcpp_components_register_nodes(resize "image_proc::ResizeNode")
 set(node_plugins "${node_plugins}image_proc::ResizeNode;$<TARGET_FILE:resize>\n")
 
+# resize library
+ament_auto_add_library(downsample SHARED
+  src/downsample.cpp
+)
+target_compile_definitions(downsample
+  PRIVATE "COMPOSITION_BUILDING_DLL"
+)
+rclcpp_components_register_nodes(downsample "image_proc::DownsampleNode")
+set(node_plugins "${node_plugins}image_proc::DownsampleNode;$<TARGET_FILE:downsample>\n")
+
 # crop_decimate library
 ament_auto_add_library(crop_decimate SHARED
   src/crop_decimate.cpp
