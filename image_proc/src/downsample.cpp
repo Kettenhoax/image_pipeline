@@ -79,16 +79,12 @@ void DownsampleNode::imageCb(sensor_msgs::msg::Image::ConstSharedPtr image_msg)
   }
 
   cv_bridge::CvImagePtr cv_ptr;
-
   try {
-    cv_ptr = cv_bridge::toCvCopy(image_msg);
+    cv_ptr = cv_bridge::toCvCopy(image_msg, "mono8");
   } catch (cv_bridge::Exception & e) {
     RCLCPP_ERROR(this->get_logger(), "cv_bridge exception: %s", e.what());
     return;
   }
-
-  cv_ptr->image.convertTo(cv_ptr->image, CV_8U, 1 / 256.0);
-  cv_ptr->encoding = "mono8";
   pub_image_.publish(*cv_ptr->toImageMsg());
 }
 
