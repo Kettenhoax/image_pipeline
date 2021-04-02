@@ -50,14 +50,14 @@ ResizeNode::ResizeNode(const rclcpp::NodeOptions & options)
 : rclcpp::Node("ResizeNode", options)
 {
   // Create image pub
-  pub_image_ = image_transport::create_camera_publisher(this, "resize");
+  pub_image_ = image_transport::create_camera_publisher(this, "out/resize", rmw_qos_profile_sensor_data);
   // Create image sub
   sub_image_ = image_transport::create_camera_subscription(
     this, "image",
     std::bind(
       &ResizeNode::imageCb, this,
       std::placeholders::_1,
-      std::placeholders::_2), "raw");
+      std::placeholders::_2), "raw", rmw_qos_profile_sensor_data);
 
   interpolation_ = this->declare_parameter("interpolation", 1);
   use_scale_ = this->declare_parameter("use_scale", true);
